@@ -73,40 +73,34 @@ def populaMatriz(matriz, pokemons):
     Saída: A matriz fornecida é modificada.
     '''
 
-    car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
-    inicial_pokemon = car_pokemon[0][0] + "  "
-    raio = int(car_pokemon[1])
-    x = int(car_pokemon[2])
-    y = -(int(car_pokemon[3]) + 1)
-    # Definindo o ponto central do pokemon
-    matriz_vazia[y][x] = inicial_pokemon
-
-
-
-
-    matriz_modificada = matriz
-    i = 1
-    for pokemon in pokemons:
-        car_pokemon = str(pokemons[i])[2:][:-2].split()
-        raio = -(int(car_pokemon[1]) + 1)
-        inicial_pokemon = car_pokemon[0][0] + " "
+    lista_arquivo = pokemons
+    matriz_vazia = matriz
+    i = 0
+    for pokemon in lista_arquivo:
+    # Ex: ['Nidoran', '1', '14', '13']
+        
+        car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
+        inicial_pokemon = car_pokemon[0][0] + "  "
+        raio = int(car_pokemon[1])
         x = int(car_pokemon[2])
         y = -(int(car_pokemon[3]) + 1)
-        
-        matriz_modificada[y][x] = inicial_pokemon
+        # Definindo o ponto central do pokemon
+        matriz_vazia[y][x] = inicial_pokemon
 
+        matriz_populada = preenchePokemon(matriz_vazia, inicial_pokemon, x, y, raio)
+        '''
         # Preenchendo o raio para a esquerda e direita no grid
         
         #Preenchendo a coluna com o raio do pokemon para baixo
         h = y + 1
         for linha in range(raio):
-            matriz_modificada[h][x] = inicial_pokemon
+            matriz_vazia[h][x] = inicial_pokemon
             h += 1
         
         #Preenchendo a coluna com o raio do pokemon para cima 
         l = y - 1
         for linha in range(raio):
-            matriz_modificada[l][x] = inicial_pokemon
+            matriz_vazia[l][x] = inicial_pokemon
             l -= 1
         
         
@@ -116,7 +110,7 @@ def populaMatriz(matriz, pokemons):
             # Preenchendo o raio para esquerda
             p = x - 1
             for k in range(raio):
-                matriz_modificada[h][p] = inicial_pokemon
+                matriz_vazia[h][p] = inicial_pokemon
                 p -= 1
             h -= 1
 
@@ -126,7 +120,7 @@ def populaMatriz(matriz, pokemons):
             # Preenchendo o raio para direita
             p = x + 1
             for k in range(raio):
-                matriz_modificada[h][p] = inicial_pokemon
+                matriz_vazia[h][p] = inicial_pokemon
                 p += 1
             h -= 1
         
@@ -136,7 +130,7 @@ def populaMatriz(matriz, pokemons):
             # Preenchendo o raio para esquerda
             p = x - 1
             for k in range(raio):
-                matriz_modificada[h][p] = inicial_pokemon
+                matriz_vazia[h][p] = inicial_pokemon
                 p -= 1
             h += 1
 
@@ -146,12 +140,14 @@ def populaMatriz(matriz, pokemons):
             # Preenchendo o raio para direita
             p = x + 1
             for k in range(raio):
-                matriz_modificada[h][p] = inicial_pokemon
+                matriz_vazia[h][p] = inicial_pokemon
                 p += 1
             h += 1
-        i += 1
 
-    return matriz_modificada
+        
+        '''
+        i += 1
+    return matriz_populada
 
 
 def preenchePokemon(matriz, id, x, y, raio):
@@ -169,7 +165,7 @@ def preenchePokemon(matriz, id, x, y, raio):
     Saída: A matriz fornecida é modificada.
     '''
 
-        # Preenchendo o raio para a esquerda e direita no grid
+    # Preenchendo o raio para a esquerda e direita no grid
         
         #Preenchendo a coluna com o raio do pokemon para baixo
     h = y + 1
@@ -223,8 +219,6 @@ def preenchePokemon(matriz, id, x, y, raio):
             matriz[h][p] = id
             p += 1
         h += 1
-
-    print(matriz)
 
     return matriz
 
@@ -308,8 +302,8 @@ def main():
     matriz_vazia = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
 
     # Função que recebe o lista do grid e a informação dos pokemons
-    #matriz_pokemons = populaMatriz(matriz_vazia,lista_arquivo[1:])
-
+    matriz_pokemons = populaMatriz(matriz_vazia,lista_arquivo[1:])
+    '''
     i = 1
     for pokemon in lista_arquivo[1:]:
     # Ex: ['Nidoran', '1', '14', '13']
@@ -378,9 +372,9 @@ def main():
             h += 1
 
         i += 1
-        
+    '''
     # Loop de impressão da matriz em um plano 2d
-    imprimeMatriz(matriz_vazia)
+    imprimeMatriz(matriz_pokemons)
 
  
 main()
