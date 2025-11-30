@@ -53,7 +53,7 @@ def criaMatriz(m, n): #DONE
     lista_n_listas = []
 
     for i in range(n):
-        lista_n_elementos.append('.') # A matriz é populada com pontos
+        lista_n_elementos.append('.  ') # A matriz é populada com pontos
 
     for l in range(m):
         lista_n_listas.append(lista_n_elementos)
@@ -72,7 +72,86 @@ def populaMatriz(matriz, pokemons):
     Entrada: matriz representada por uma lista de listas
     Saída: A matriz fornecida é modificada.
     '''
-    return None
+
+    car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
+    inicial_pokemon = car_pokemon[0][0] + "  "
+    raio = int(car_pokemon[1])
+    x = int(car_pokemon[2])
+    y = -(int(car_pokemon[3]) + 1)
+    # Definindo o ponto central do pokemon
+    matriz_vazia[y][x] = inicial_pokemon
+
+
+
+
+    matriz_modificada = matriz
+    i = 1
+    for pokemon in pokemons:
+        car_pokemon = str(pokemons[i])[2:][:-2].split()
+        raio = -(int(car_pokemon[1]) + 1)
+        inicial_pokemon = car_pokemon[0][0] + " "
+        x = int(car_pokemon[2])
+        y = -(int(car_pokemon[3]) + 1)
+        
+        matriz_modificada[y][x] = inicial_pokemon
+
+        # Preenchendo o raio para a esquerda e direita no grid
+        
+        #Preenchendo a coluna com o raio do pokemon para baixo
+        h = y + 1
+        for linha in range(raio):
+            matriz_modificada[h][x] = inicial_pokemon
+            h += 1
+        
+        #Preenchendo a coluna com o raio do pokemon para cima 
+        l = y - 1
+        for linha in range(raio):
+            matriz_modificada[l][x] = inicial_pokemon
+            l -= 1
+        
+        
+        # Preenchendo diagonais para cima/esquerda
+        h = y
+        for linha in range(raio + 1): 
+            # Preenchendo o raio para esquerda
+            p = x - 1
+            for k in range(raio):
+                matriz_modificada[h][p] = inicial_pokemon
+                p -= 1
+            h -= 1
+
+        # Preenchendo diagonais para cima/direita
+        h = y
+        for linha in range(raio + 1):
+            # Preenchendo o raio para direita
+            p = x + 1
+            for k in range(raio):
+                matriz_modificada[h][p] = inicial_pokemon
+                p += 1
+            h -= 1
+        
+        # Preenchendo diagonais para baixo/esquerda
+        h = y
+        for linha in range(raio + 1): 
+            # Preenchendo o raio para esquerda
+            p = x - 1
+            for k in range(raio):
+                matriz_modificada[h][p] = inicial_pokemon
+                p -= 1
+            h += 1
+
+        # Preenchendo diagonais para baixo/direita
+        h = y
+        for linha in range(raio + 1):
+            # Preenchendo o raio para direita
+            p = x + 1
+            for k in range(raio):
+                matriz_modificada[h][p] = inicial_pokemon
+                p += 1
+            h += 1
+        i += 1
+
+    return matriz_modificada
 
 
 def preenchePokemon(matriz, id, x, y, raio):
@@ -89,7 +168,65 @@ def preenchePokemon(matriz, id, x, y, raio):
              ponto central.
     Saída: A matriz fornecida é modificada.
     '''
-    return None
+
+        # Preenchendo o raio para a esquerda e direita no grid
+        
+        #Preenchendo a coluna com o raio do pokemon para baixo
+    h = y + 1
+    for linha in range(raio):
+        matriz[h][x] = id
+        h += 1
+    
+    #Preenchendo a coluna com o raio do pokemon para cima 
+    l = y - 1
+    for linha in range(raio):
+        matriz[l][x] = id
+        l -= 1
+    
+    
+    # Preenchendo diagonais para cima/esquerda
+    h = y
+    for linha in range(raio + 1): 
+        # Preenchendo o raio para esquerda
+        p = x - 1
+        for k in range(raio):
+            matriz[h][p] = id
+            p -= 1
+        h -= 1
+
+    # Preenchendo diagonais para cima/direita
+    h = y
+    for linha in range(raio + 1):
+        # Preenchendo o raio para direita
+        p = x + 1
+        for k in range(raio):
+            matriz[h][p] = id
+            p += 1
+        h -= 1
+    
+    # Preenchendo diagonais para baixo/esquerda
+    h = y
+    for linha in range(raio + 1): 
+        # Preenchendo o raio para esquerda
+        p = x - 1
+        for k in range(raio):
+            matriz[h][p] = id
+            p -= 1
+        h += 1
+
+    # Preenchendo diagonais para baixo/direita
+    h = y
+    for linha in range(raio + 1):
+        # Preenchendo o raio para direita
+        p = x + 1
+        for k in range(raio):
+            matriz[h][p] = id
+            p += 1
+        h += 1
+
+    print(matriz)
+
+    return matriz
 
 
 def removePokemon(matriz, id, pokemons):
@@ -159,7 +296,8 @@ def grau2Radiano(theta):
 def main():
     nome = input("Digite o nome do arquivo: ")
     N = int(input("Digite o numero N de pokebolas: "))
-
+    T = int(input('Digite a posição inicial no eixo x do jogador: '))
+    
     # Variável que guarda as dimensões da matriz e as informações dos pokemons
     lista_arquivo = leArquivo(nome)
     
@@ -167,51 +305,82 @@ def main():
     dimensoes_matriz = str(lista_arquivo[0])[2:][:-2].split()
     
     # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
-    elementos_matriz = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
+    matriz_vazia = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
+
+    # Função que recebe o lista do grid e a informação dos pokemons
+    #matriz_pokemons = populaMatriz(matriz_vazia,lista_arquivo[1:])
 
     i = 1
-    for l in lista_arquivo[1:]:
-        # Nome, raio e posicao do pokemon (depois precisa atualizar isso aqui num loop for para os demais pokemons)
-        car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
-
+    for pokemon in lista_arquivo[1:]:
     # Ex: ['Nidoran', '1', '14', '13']
+        
+        car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
+        inicial_pokemon = car_pokemon[0][0] + "  "
         raio = int(car_pokemon[1])
-        x = int(car_pokemon[2]) - 1
-        y = int(car_pokemon[3]) - 1
+        x = int(car_pokemon[2])
+        y = -(int(car_pokemon[3]) + 1)
         # Definindo o ponto central do pokemon
-        elementos_matriz[y][x] = raio
+        matriz_vazia[y][x] = inicial_pokemon
 
         # Preenchendo o raio para a esquerda e direita no grid
         
-        #Preenchendo a coluna com o raio do pokemon para cima
+        #Preenchendo a coluna com o raio do pokemon para baixo
         h = y + 1
         for linha in range(raio):
-            elementos_matriz[h][x] = raio
+            matriz_vazia[h][x] = inicial_pokemon
             h += 1
         
-        #Preenchendo a coluna com o raio do pokemon para baixo 
-        
+        #Preenchendo a coluna com o raio do pokemon para cima 
         l = y - 1
         for linha in range(raio):
-            elementos_matriz[l][x] = raio
+            matriz_vazia[l][x] = inicial_pokemon
             l -= 1
         
         
-        p = x - 1
-        for k in range(raio):
-            elementos_matriz[y][p] = raio
-            p -= 1
-        p = x + 1
-        for k in range(raio):
-            elementos_matriz[y][p] = raio
-            p += 1
-        
+        # Preenchendo diagonais para cima/esquerda
+        h = y
+        for linha in range(raio + 1): 
+            # Preenchendo o raio para esquerda
+            p = x - 1
+            for k in range(raio):
+                matriz_vazia[h][p] = inicial_pokemon
+                p -= 1
+            h -= 1
 
+        # Preenchendo diagonais para cima/direita
+        h = y
+        for linha in range(raio + 1):
+            # Preenchendo o raio para direita
+            p = x + 1
+            for k in range(raio):
+                matriz_vazia[h][p] = inicial_pokemon
+                p += 1
+            h -= 1
         
+        # Preenchendo diagonais para baixo/esquerda
+        h = y
+        for linha in range(raio + 1): 
+            # Preenchendo o raio para esquerda
+            p = x - 1
+            for k in range(raio):
+                matriz_vazia[h][p] = inicial_pokemon
+                p -= 1
+            h += 1
+
+        # Preenchendo diagonais para baixo/direita
+        h = y
+        for linha in range(raio + 1):
+            # Preenchendo o raio para direita
+            p = x + 1
+            for k in range(raio):
+                matriz_vazia[h][p] = inicial_pokemon
+                p += 1
+            h += 1
+
         i += 1
-    
+        
     # Loop de impressão da matriz em um plano 2d
-    imprimeMatriz(elementos_matriz)
+    imprimeMatriz(matriz_vazia)
 
  
 main()
