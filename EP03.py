@@ -10,7 +10,7 @@ GRAVIDADE = 2
 # NÃO modifique os nomes e parâmetros dessas funções.
 # ======================================================================
 
-def leArquivo(file_name):
+def leArquivo(file_name): #DONE
     '''
     Esta função lê um arquivo ('entrada.txt' por default) e
     retorna uma lista de listas.
@@ -41,7 +41,7 @@ def leArquivo(file_name):
     return parametros_arquivo
 
 
-def criaMatriz(m, n):
+def criaMatriz(m, n): #DONE
     '''
     Esta função cria e retorna uma lista de listas.
     Entrada: dois inteiros que representam o número de linhas e
@@ -107,7 +107,7 @@ def removePokemon(matriz, id, pokemons):
     return None
 
 
-def imprimeMatriz(matriz):
+def imprimeMatriz(matriz): #DONE
     '''
     Esta função imprime a matriz dada.
     Note que a matriz deve ser impressa com espelhamento vertical, 
@@ -169,19 +169,49 @@ def main():
     # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
     elementos_matriz = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
 
-    # Nome, raio e posicao do pokemon (depois precisa atualizar isso aqui num loop for para os demais pokemons)
-    car_pokemon = str(lista_arquivo[1])[2:][:-2].split()
-    
+    i = 1
+    for l in lista_arquivo[1:]:
+        # Nome, raio e posicao do pokemon (depois precisa atualizar isso aqui num loop for para os demais pokemons)
+        car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
+
     # Ex: ['Nidoran', '1', '14', '13']
-    raio = int(car_pokemon[1])
-    x = int(car_pokemon[2])
-    y = int(car_pokemon[3])
+        raio = int(car_pokemon[1])
+        x = int(car_pokemon[2]) - 1
+        y = int(car_pokemon[3]) - 1
+        # Definindo o ponto central do pokemon
+        elementos_matriz[y][x] = raio
 
-    elementos_matriz[x][y] = raio
+        # Preenchendo o raio para a esquerda e direita no grid
+        
+        #Preenchendo a coluna com o raio do pokemon para cima
+        h = y + 1
+        for linha in range(raio):
+            elementos_matriz[h][x] = raio
+            h += 1
+        
+        #Preenchendo a coluna com o raio do pokemon para baixo 
+        
+        l = y - 1
+        for linha in range(raio):
+            elementos_matriz[l][x] = raio
+            l -= 1
+        
+        
+        p = x - 1
+        for k in range(raio):
+            elementos_matriz[y][p] = raio
+            p -= 1
+        p = x + 1
+        for k in range(raio):
+            elementos_matriz[y][p] = raio
+            p += 1
+        
 
+        
+        i += 1
+    
     # Loop de impressão da matriz em um plano 2d
     imprimeMatriz(elementos_matriz)
-    
 
  
 main()
