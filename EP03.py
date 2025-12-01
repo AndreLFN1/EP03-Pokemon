@@ -63,7 +63,7 @@ def criaMatriz(m, n): #DONE
     return lista_n_listas
 
 
-def populaMatriz(matriz, pokemons):
+def populaMatriz(matriz, pokemons): #DONE
     '''
     Esta função recebe uma matriz e uma lista contendo listas que
     representam os pokémons na forma [nome, raio, x, y] e preenche-a
@@ -88,69 +88,12 @@ def populaMatriz(matriz, pokemons):
         matriz_vazia[y][x] = inicial_pokemon
 
         matriz_populada = preenchePokemon(matriz_vazia, inicial_pokemon, x, y, raio)
-        '''
-        # Preenchendo o raio para a esquerda e direita no grid
         
-        #Preenchendo a coluna com o raio do pokemon para baixo
-        h = y + 1
-        for linha in range(raio):
-            matriz_vazia[h][x] = inicial_pokemon
-            h += 1
-        
-        #Preenchendo a coluna com o raio do pokemon para cima 
-        l = y - 1
-        for linha in range(raio):
-            matriz_vazia[l][x] = inicial_pokemon
-            l -= 1
-        
-        
-        # Preenchendo diagonais para cima/esquerda
-        h = y
-        for linha in range(raio + 1): 
-            # Preenchendo o raio para esquerda
-            p = x - 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p -= 1
-            h -= 1
-
-        # Preenchendo diagonais para cima/direita
-        h = y
-        for linha in range(raio + 1):
-            # Preenchendo o raio para direita
-            p = x + 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p += 1
-            h -= 1
-        
-        # Preenchendo diagonais para baixo/esquerda
-        h = y
-        for linha in range(raio + 1): 
-            # Preenchendo o raio para esquerda
-            p = x - 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p -= 1
-            h += 1
-
-        # Preenchendo diagonais para baixo/direita
-        h = y
-        for linha in range(raio + 1):
-            # Preenchendo o raio para direita
-            p = x + 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p += 1
-            h += 1
-
-        
-        '''
         i += 1
     return matriz_populada
 
 
-def preenchePokemon(matriz, id, x, y, raio):
+def preenchePokemon(matriz, id, x, y, raio): #DONE
     '''
     Esta função é auxiliar da função populaMatriz. Ela insere
     um Pokémon na matriz de acordo com sua representação retangular
@@ -223,7 +166,7 @@ def preenchePokemon(matriz, id, x, y, raio):
     return matriz
 
 
-def removePokemon(matriz, id, pokemons):
+def removePokemon(matriz, id, pokemons): #DONE
     '''
     Esta função recebe uma matriz, o numeral que representa o pokémon
     a ser removido da matriz (id) e a lista contendo as listas que
@@ -235,7 +178,30 @@ def removePokemon(matriz, id, pokemons):
              pokemons lista contendo as listas que representam pokémons.
     Saída: A matriz fornecida é modificada.
     '''
-    return None
+    # matriz_pokemons = removePokemon(matriz_pokemons, id, lista_arquivo[1:])
+    car_pokemon = str(pokemons[id])[2:][:-2].split()
+    inicial_pokemon = car_pokemon[0][0] + "  "
+    print(inicial_pokemon)
+    
+    '''
+    para cada linha
+    para cada letra na linha
+        verificar se a letra é igual ao pokemon
+            se sim, substituir
+        se nao, nao fazer nada
+    '''
+    i = 0
+    for linha in matriz:
+        p = 0 
+        for elemento in matriz[i]:
+            if elemento == inicial_pokemon:
+                matriz[i][p] = '.  '
+            else:  
+                pass
+            p += 1
+        i += 1
+
+    return matriz
 
 
 def imprimeMatriz(matriz): #DONE
@@ -263,7 +229,10 @@ def atualizaPosicao(x, y, vx, vy, dt=DELTA_T):
     vy em metros por segundo e o intervalo de tempo em segundos.
     Saída: Dois valores: o valor atualizado de x e o valor atualizado de y.
     '''
-    return None
+    xt_yt = []
+    #Implementar
+
+    return xt_yt
 
 
 def atualizaVelocidade(vx, vy, dt=DELTA_T):
@@ -274,18 +243,37 @@ def atualizaVelocidade(vx, vy, dt=DELTA_T):
     intervalo de tempo em segundos.
     Saída: Dois valores: o valor atualizado de vx e o valor atualizado de vy.
     '''
-    return None
+    # Criando lista para armazenar as variáveis
+    vx_vy = []
+    # Atualizando VX
+    vx_vy[0] = 'implementar'
+
+    # Atualizando vy 
+    vx_vy[1] = 'implementar'
+    
+    return vx_vy
 
 
-def grau2Radiano(theta):
+def grau2Radiano(theta): #DONE
     '''
     Esta função converte o ângulo theta em graus para radianos.
     Entrada: ângulo theta.
     Saída: ângulo theta em radianos.
     '''
-    return None
 
+    grau_radiano = math.radians(theta)
+    return grau_radiano
 
+def posicionaJogador(matriz, x): #DONE
+    '''
+    [FUNÇÃO CRIADA]
+
+    Entrada: Essa função recebe a posição x e a matriz 
+    Saída: Modifica a matriz
+    '''
+    matriz[-1][x] = 'T  '
+
+    return matriz
 
 def main():
     nome = input("Digite o nome do arquivo: ")
@@ -294,87 +282,36 @@ def main():
     
     # Variável que guarda as dimensões da matriz e as informações dos pokemons
     lista_arquivo = leArquivo(nome)
-    
+
     # Guarda as dimensoes da matriz em uma lista
     dimensoes_matriz = str(lista_arquivo[0])[2:][:-2].split()
-    
-    # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
+
+     # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
     matriz_vazia = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
 
     # Função que recebe o lista do grid e a informação dos pokemons
     matriz_pokemons = populaMatriz(matriz_vazia,lista_arquivo[1:])
-    '''
-    i = 1
-    for pokemon in lista_arquivo[1:]:
-    # Ex: ['Nidoran', '1', '14', '13']
-        
-        car_pokemon = str(lista_arquivo[i])[2:][:-2].split()
-        inicial_pokemon = car_pokemon[0][0] + "  "
-        raio = int(car_pokemon[1])
-        x = int(car_pokemon[2])
-        y = -(int(car_pokemon[3]) + 1)
-        # Definindo o ponto central do pokemon
-        matriz_vazia[y][x] = inicial_pokemon
+    
+    matriz_inicial = posicionaJogador(matriz_pokemons,T)
 
-        # Preenchendo o raio para a esquerda e direita no grid
-        
-        #Preenchendo a coluna com o raio do pokemon para baixo
-        h = y + 1
-        for linha in range(raio):
-            matriz_vazia[h][x] = inicial_pokemon
-            h += 1
-        
-        #Preenchendo a coluna com o raio do pokemon para cima 
-        l = y - 1
-        for linha in range(raio):
-            matriz_vazia[l][x] = inicial_pokemon
-            l -= 1
-        
-        
-        # Preenchendo diagonais para cima/esquerda
-        h = y
-        for linha in range(raio + 1): 
-            # Preenchendo o raio para esquerda
-            p = x - 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p -= 1
-            h -= 1
-
-        # Preenchendo diagonais para cima/direita
-        h = y
-        for linha in range(raio + 1):
-            # Preenchendo o raio para direita
-            p = x + 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p += 1
-            h -= 1
-        
-        # Preenchendo diagonais para baixo/esquerda
-        h = y
-        for linha in range(raio + 1): 
-            # Preenchendo o raio para esquerda
-            p = x - 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p -= 1
-            h += 1
-
-        # Preenchendo diagonais para baixo/direita
-        h = y
-        for linha in range(raio + 1):
-            # Preenchendo o raio para direita
-            p = x + 1
-            for k in range(raio):
-                matriz_vazia[h][p] = inicial_pokemon
-                p += 1
-            h += 1
-
-        i += 1
-    '''
     # Loop de impressão da matriz em um plano 2d
-    imprimeMatriz(matriz_pokemons)
+    imprimeMatriz(matriz_inicial)
+
+    # Variáveis globais
+    
+
+    pi = math.pi
+            
+    velocidade_inicial = float(input('Digite a velocidade de lançamento inicial (m/s): '))
+    theta = grau2Radiano(int(input('Digite o ângulo de lançamento inicial (em graus): ')))
+    g = 2
+    DELTA_T = 0.1
+    V0_x = velocidade_inicial*math.cos(theta)
+    V0y =  velocidade_inicial*math.sin(theta)
+    
+
+
+   
 
  
 main()
