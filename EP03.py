@@ -246,10 +246,10 @@ def atualizaVelocidade(vx, vy, dt=DELTA_T):
     # Criando lista para armazenar as variáveis
     vx_vy = []
     # Atualizando VX
-    vx_vy[0] = 'implementar'
+    vx_vy[0] = 'implementar' # Velocidade horizontal
 
     # Atualizando vy 
-    vx_vy[1] = 'implementar'
+    vx_vy[1] = 'implementar' # Velocidade vertical 
     
     return vx_vy
 
@@ -286,29 +286,28 @@ def main():
     # Guarda as dimensoes da matriz em uma lista
     dimensoes_matriz = str(lista_arquivo[0])[2:][:-2].split()
 
-     # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
+    # Retorna uma lista de listas com m linhas (numero de elementos) e n colunas (numero de elementos em cada elemento)
     matriz_vazia = criaMatriz(int(dimensoes_matriz[0]),int(dimensoes_matriz[1]))
 
-    # Função que recebe o lista do grid e a informação dos pokemons
+    # Função que recebe o lista do grid e a informação dos pokemons e popula com pokemons
     matriz_pokemons = populaMatriz(matriz_vazia,lista_arquivo[1:])
     
+    # A matriz com pokemons é populada com a posicao inicial do jogador
     matriz_inicial = posicionaJogador(matriz_pokemons,T)
 
     # Loop de impressão da matriz em um plano 2d
     imprimeMatriz(matriz_inicial)
 
     # Variáveis globais
-    
-
-    pi = math.pi
-            
+    pi = math.pi    
     velocidade_inicial = float(input('Digite a velocidade de lançamento inicial (m/s): '))
     theta = grau2Radiano(int(input('Digite o ângulo de lançamento inicial (em graus): ')))
     g = 2
     DELTA_T = 0.1
     V0_x = velocidade_inicial*math.cos(theta)
-    V0y =  velocidade_inicial*math.sin(theta)
+    V0_y =  velocidade_inicial*math.sin(theta)
     
+    velocidade_atualizada = atualizaVelocidade(V0_x,V0_y,DELTA_T)
 
 
    
