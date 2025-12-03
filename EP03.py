@@ -235,7 +235,7 @@ def atualizaPosicao(x, y, vx, vy, dt=DELTA_T): #DONE
     x_atualizado = round(x + vx * DELTA_T, 2)
     y_atualizado = round(y + vy * DELTA_T - 0.5 * g * DELTA_T**2, 2)
     xy_atualizado.append(x_atualizado)
-    xy_atualizado.append(y_atualizado)
+    xy_atualizado.append(-y_atualizado)
     return xy_atualizado
 
 
@@ -307,8 +307,8 @@ def main():
     Vy = round(velocidade_inicial * math.sin(theta), 2)
     
     floor_position = 0
-    left_grid = -100
-    right_grid = 100
+    left_grid = 0
+    right_grid = len(matriz_vazia)
 
     x_atualizado = 0
     y_atualizado = 0
@@ -319,14 +319,23 @@ def main():
         x_atualizado = xy_posicao[0]
         y_atualizado = xy_posicao[1]
 
+        
+
         # Arredondando para desenhar o gráfico
-        x_grafico = round(x_atualizado, 0)
-        y_grafico = round(y_atualizado, 0)
+        x_grafico = int(round(x_atualizado, 0))
+        y_grafico = int(round(y_atualizado, 0))
         # Atualiza velocidade vertical
+
         
         vxvy_atualizado = atualizaVelocidade(Vx, Vy, dt=DELTA_T)
         Vy = vxvy_atualizado[1]
 
+        # Atualiza valores no gráfico 
+        matriz_inicial[y_grafico][x_grafico] = 'o  '
+        print(x_grafico)
+        print(y_grafico)
+
+    imprimeMatriz(matriz_inicial)
    
 
  
