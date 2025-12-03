@@ -221,7 +221,7 @@ def imprimeMatriz(matriz): #DONE
     return None
 
 
-def atualizaPosicao(x, y, vx, vy, dt=DELTA_T):
+def atualizaPosicao(x, y, vx, vy, dt=DELTA_T): #DONE
     '''
     Esta função calcula as atualizações das posições de x e y usando
     as velocidades escalares respectivamente dadas por vx e vy.
@@ -229,13 +229,17 @@ def atualizaPosicao(x, y, vx, vy, dt=DELTA_T):
     vy em metros por segundo e o intervalo de tempo em segundos.
     Saída: Dois valores: o valor atualizado de x e o valor atualizado de y.
     '''
-    xt_yt = []
-    #Implementar
+    # Podia ser um dicionario? Podia, mas eu to meio de saco cheio dessa parte. Aqui eu retorno x e y numa lista, foda-se
+    xy_atualizado = []
 
-    return xt_yt
+    x_atualizado = round(x + vx * DELTA_T, 2)
+    y_atualizado = round(y + vy * DELTA_T - 0.5 * g * DELTA_T**2, 2)
+    xy_atualizado.append(x_atualizado)
+    xy_atualizado.append(y_atualizado)
+    return xy_atualizado
 
 
-def atualizaVelocidade(vx, vy, dt=DELTA_T):
+def atualizaVelocidade(vx, vy, dt=DELTA_T): #DONE
     '''
     Esta função calcula e atualiza as velocidades vx e vy para o
     próximo intervalo de tempo.
@@ -243,15 +247,13 @@ def atualizaVelocidade(vx, vy, dt=DELTA_T):
     intervalo de tempo em segundos.
     Saída: Dois valores: o valor atualizado de vx e o valor atualizado de vy.
     '''
-    # Criando lista para armazenar as variáveis
-    vx_vy = []
-    # Atualizando VX
-    vx_vy[0] = 'implementar' # Velocidade horizontal
+    vxvy_atualizado = []
 
-    # Atualizando vy 
-    vx_vy[1] = 'implementar' # Velocidade vertical 
-    
-    return vx_vy
+    Vy = vy - g * DELTA_T
+    vxvy_atualizado.append(vx)
+    vxvy_atualizado.append(Vy)
+
+    return vxvy_atualizado
 
 
 def grau2Radiano(theta): #DONE
